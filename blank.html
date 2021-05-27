@@ -35,16 +35,18 @@
 
 		<section class="scroll-section" id="scroll-section-0"> <!-- 스크롤 구간을 나눔 -->
 			<h1>AirPods Pro</h1>
-			<div class="sticy-elem main-message">
+			<div class="sticky-elem main-message">
+				<!-- sticy-emel : 고정되어야하기 때문에 포지션을 fixed로 바꿔줘야함 -->
+				<!-- sticky랑 fixed랑 차이 블로그 작성 -->
 				<p>온전히 빠져들게 하는<br>액티브 노이즈 캔슬링</p>
 			</div>
-			<div class="sticy-elem main-message">
+			<div class="sticky-elem main-message">
 				<p>주변의 소리를 들려주는<br>주변음 허용 모드.</p>
 			</div>
-			<div class="sticy-elem main-message">
+			<div class="sticky-elem main-message">
 				<p>온종일 편안한 맞춤형 핏.</p>
 			</div>
-			<div class="sticy-elem main-message">
+			<div class="sticky-elem main-message">
 				<p>새롭게 귓가를 찾아온 매혹.</p>
 			</div>
 		</section>
@@ -101,5 +103,8 @@
 			2021 차아령 프로젝트
 		</footer>
 	</div>
+
+	<!-- 헤드에 스크립트를 넣으면 순서대로 load되는 특성상 이미 위에 애들 load 해놓고 script 발생! -->
+	<script src="js/main.js"></script>
 </body>
 </html>

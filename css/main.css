@@ -92,6 +92,7 @@ a {
   justify-content: center;
   height: 3em;
   font-size: 2.5rem;
+  opacity: 0;
 }
 
 .main-message small {
@@ -127,6 +128,7 @@ a {
 .desc-message {
   width: 50%;
   font-weight: bold;
+  /* display: none; */
 }
 
 .pin {

@@ -23,8 +23,16 @@
                 messageB: document.querySelector('#scroll-section-0 .main-message.b'),
                 messageC: document.querySelector('#scroll-section-0 .main-message.c'),
                 messageD: document.querySelector('#scroll-section-0 .main-message.d'),
+                // canvas 엘리먼트 가져옴
+                canvas: document.querySelector('#video-canvas-0'),
+                context: document.querySelector('#video-canvas-0').getContext('2d'),
+                // 배열에 이미지를 넣을거임
+                videoImages: [],
             },
             values : {
+                videoImageCount: 147, // 이미지 갯수
+                imageSequence: [0, 146], // 이미지 순서
+                canvas_opacity: [1, 0, {start: 0.9, end: 1}],
                 // 변화를 줄때 css값을 변하게 해줄거니까 여기다가 어떤 값을 줄것인지 정의
                 // 투명도랑 위치(y값) 바뀜 (2가지)
                 // start, and : 애니메이션이 재생되는 구간을 설정, 비율로 했기 때문에 소수점으로 지정
@@ -96,6 +104,17 @@
         }
     ];
 
+    function setCanvasImages() {
+        // 캔버스에 그려서 처리할 이미지 셋팅
+        for (let i = 0; i < sceneInfo[0].values.videoImageCount; i++) {
+            imgElem = new Image();
+            imgElem.src = `./video/001/${1 + i}.JPG`;
+            sceneInfo[0].objs.videoImages.push(imgElem);
+        }
+        // console.log(sceneInfo[0].objs.videoImages);
+    }
+    setCanvasImages();
+
     function setLayout() {
         // 각 스크롤 섹션의 높이를 셋팅함
         for(let i = 0; i < sceneInfo.length; i ++) {
@@ -119,6 +138,10 @@
             }
         }
         document.body.setAttribute('id', `show-scene-${currentScene}`);
+
+        // windowInner height랑 사이즈 비교해보면됨
+        const heightRatio = window.innerHeight / 1080;
+        sceneInfo[0].objs.canvas.style.transform =`translate3d(-50%, -50%, 0) scale(${heightRatio})`;
     }
 
     // values : opacity 값 0, 1 그 배열이 들어갈거임
@@ -168,7 +191,12 @@
         switch (currentScene) {
             case 0:
                 // console.log('0 play');
-                
+                let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
+                // console.log(sequence);
+                // 캔버스에 그려줌
+                objs.context.drawImage(objs.videoImages[sequence], 0, 0);
+                objs.canvas.style.opacity = calcValues(values.canvas_opacity, currentYOffset);
+
                 if (scrollRatio <= 0.22) {
                     // in
                     // 위 결과 값으로 css 세팅
@@ -244,12 +272,12 @@
                     // in
                     objs.messageC.style.transform = `translate3d(0, ${calcValues(values.messageC_translateY_in, currentYOffset)}%, 0)`;
                     objs.messageC.style.opacity = calcValues(values.messageC_opacity_in, currentYOffset);
-                    objs.pinC.style.transform = `scaleY(${calcValues(values.pinC_scaleY, currentYOffset)})`;
+                    // objs.pinC.style.transform = `scaleY(${calcValues(values.pinC_scaleY, currentYOffset)})`;
                 } else {
                     // out
                     objs.messageC.style.transform = `translate3d(0, ${calcValues(values.messageC_translateY_out, currentYOffset)}%, 0)`;
                     objs.messageC.style.opacity = calcValues(values.messageC_opacity_out, currentYOffset);
-                    objs.pinC.style.transform = `scaleY(${calcValues(values.pinC_scaleY, currentYOffset)})`;
+                    // objs.pinC.style.transform = `scaleY(${calcValues(values.pinC_scaleY, currentYOffset)})`;
                 }
     
                 break;
@@ -300,8 +328,10 @@
         scrollLoop();
     });
     
-    window.addEventListener('load', setLayout);
+    window.addEventListener('load', () => {
+        setLayout();
+        sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
+    });
     // 사이즈 바뀌면 레이아웃도 적용되도록!
     window.addEventListener('resize', setLayout);
-
 })();

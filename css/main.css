@@ -26,6 +26,7 @@ a {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 10;
   width: 100%;
   height: 44px;
   padding: 0 1rem;
@@ -35,6 +36,7 @@ a {
   position: absolute;
   top: 45px;
   left: 0;
+  z-index: 11;
   width: 100%;
   height: 52px;
   border-bottom: 1px solid #ddd;
@@ -82,6 +84,9 @@ a {
 /* 모바일로 맞추고 확장하는 식으로 만듬.. */
 
 #scroll-section-0 h1 {
+  position: relative;
+  top: -10vh;
+  z-index: 5;
   font-size: 4rem;
   text-align: center;
 }
@@ -196,6 +201,17 @@ body#show-scene-0 #scroll-section-0 .sticky-elem,
   display: block;
 }
 
+.sticky-elem-canvas {
+  top: 0;
+  height: 100%;
+}
+
+.sticky-elem-canvas canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
 /* 데스크탑 사이즈 맞추기 */
 @media (min-width: 1024px) {
   #scroll-section-0 h1 {
@@ -240,8 +256,8 @@ body#show-scene-0 #scroll-section-0 .sticky-elem,
     font-size: 4vw;
   }
 
-  /* .canvas-caption {
-    2rem : html 폰트 사이즈의 2배
+  .canvas-caption {
+    /* 2rem : html 폰트 사이즈의 2배 */
     font-size: 2rem;
-  } */
+  }
 }
